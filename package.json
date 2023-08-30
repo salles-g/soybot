@@ -4,6 +4,7 @@
   "description": "A Soyjak bot for Discord",
   "main": "index.js",
   "scripts": {
+    "precommit": "npm version patch",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
@@ -16,5 +17,13 @@
     "discord.js": "^14.13.0",
     "dotenv": "^16.3.1",
     "sharp": "^0.32.5"
+  },
+  "devDependencies": {
+    "husky": "^8.0.3"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run precommit"
+    }
   }
 }
