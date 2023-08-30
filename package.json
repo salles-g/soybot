@@ -13,6 +13,8 @@
   "author": "salles-g",
   "license": "ISC",
   "dependencies": {
+    "discord.js": "^14.13.0",
+    "dotenv": "^16.3.1",
     "sharp": "^0.32.5"
   }
 }
