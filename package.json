@@ -1,10 +1,9 @@
 {
   "name": "soybot",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "A Soyjak bot for Discord",
   "main": "index.js",
   "scripts": {
-    "postcommit": "npm version patch",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
@@ -17,13 +16,5 @@
     "discord.js": "^14.13.0",
     "dotenv": "^16.3.1",
     "sharp": "^0.32.5"
-  },
-  "husky": {
-    "hooks": {
-      "post-commit": "echo \"[Husky] pre-commit\" && npm run postcommit"
-    }
-  },
-  "devDependencies": {
-    "husky": "^4.3.8"
   }
 }
