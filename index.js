@@ -7,7 +7,7 @@ const image = (name) => sharp(path(name));
 /**
  * Receives a background image and composites a soyjack pointing to it
  */
-async function compositeSoyjack(bg) {
+async function compositeSoyjak(bg) {
   const background = image(bg);
   const { width, height } = await background.metadata();
 
@@ -26,4 +26,4 @@ async function compositeSoyjack(bg) {
   require("fs").unlinkSync(temp);
 }
 
-compositeSoyjack("leao.jpg");
+compositeSoyjak("switch.jpg");
