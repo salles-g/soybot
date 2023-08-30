@@ -1,0 +1,5 @@
+dist
+node_modules
+# Ignore all images, except for soyjak-pointing.png
+images/*
+!images/soyjak-pointing.png
