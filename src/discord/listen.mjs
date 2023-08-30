@@ -21,19 +21,6 @@ export function listen() {
     console.log(`Logged in as ${client.user.tag}!`);
   });
 
-  // Listens for slash commands
-  client.on(Events.InteractionCreate, async (interaction) => {
-    if (!interaction.isChatInputCommand()) {
-      return;
-    }
-
-    if (interaction.commandName === "point") {
-      await interaction.channel.send({
-        files: ["dist/homestucka.jpeg"],
-      });
-    }
-  });
-
   // Listen to all messages
   client.on(Events.MessageCreate, async (message) => {
     const command = message.content.match(/!(\w+)/)?.[1];
