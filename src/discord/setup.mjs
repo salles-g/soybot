@@ -2,12 +2,7 @@ import { REST, Routes } from "discord.js";
 
 export async function setup() {
   // This is the list of commands that the bot will have
-  const commands = [
-    {
-      name: "point",
-      description: "Soyjak points at something",
-    },
-  ];
+  const commands = [];
   console.log("Setting up slash commands");
 
   const rest = new REST({ version: "10" }).setToken(

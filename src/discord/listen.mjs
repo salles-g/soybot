@@ -39,13 +39,35 @@ export function listen() {
   // Listen to all messages
   client.on(Events.MessageCreate, async (message) => {
     const { content, image, replied } = messageInfo(message);
-    // TODO: allow original image as well as replied image
-    if (content === "!point" && replied.image) {
+    if (content !== "!point") {
+      return;
+    }
+
+    // Delete the message if it doesn't have an image
+    if (!image) {
+      message.delete();
+    }
+
+    if (replied.image) {
       await downloadImage(replied.image);
       await compositeSoyjak("point", "temp.png");
-      await message.channel.send({
+      // Reply to replied.id with the generated image
+      await message.channel.messages.fetch(replied.id).then((msg) => {
+        msg.reply({
+          files: ["dist/new.png"],
+        });
+      });
+      return;
+    }
+
+    if (image) {
+      await downloadImage(image);
+      await compositeSoyjak("point", "temp.png");
+      // Reply to the message with the generated image
+      await message.reply({
         files: ["dist/new.png"],
       });
+      return;
     }
   });
 
