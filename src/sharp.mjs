@@ -1,7 +1,11 @@
 import fs from "fs";
 import sharp from "sharp";
 
-const temp = "dist/temp.png";
+// Find any file in the "images" folder with temp.* filename
+const findImg = (name) => {
+  const files = fs.readdirSync("./images");
+  return files.find((file) => file.startsWith(name));
+};
 const path = (name) => `./images/${name}`;
 const image = (name) => sharp(path(name));
 const soyMap = {
@@ -13,6 +17,7 @@ const soyMap = {
  */
 export async function compositeSoyjak(soyjak, source) {
   soyjak = soyMap[soyjak];
+  source = findImg(source);
   const background = image(source);
   const { width, height } = await background.metadata();
 
@@ -21,15 +26,15 @@ export async function compositeSoyjak(soyjak, source) {
   });
 
   await soyjakInst.toBuffer().then((input) => {
-    return background.composite([{ input }]).toFile(temp);
+    return background.composite([{ input }]).toFile(source);
   });
 
   // Now we read the generated "temp" file and trim its borders
-  await sharp(temp).trim().toFile(`dist/new.png`);
+  const filePath = `dist/${source}`;
+  await sharp(source).trim().toFile(filePath);
 
   // And finally, we delete the temp file and the source
-  fs.unlinkSync(temp);
-  fs.unlinkSync(path(source));
+  fs.unlinkSync(findImg(source));
 
-  return;
+  return { filePath };
 }

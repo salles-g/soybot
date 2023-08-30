@@ -6,7 +6,7 @@ export async function point(message) {
   const { image, replied } = messageInfo(message);
 
   // If there are no images at all, do nothing
-  if (!image && !replied) {
+  if (!image && !replied?.image) {
     return;
   }
 
@@ -15,26 +15,24 @@ export async function point(message) {
     message.delete();
   }
 
-  // If the user is replying to an image, soyjakify it
+  // Download and composite the soyjak
+  const { filename } = await downloadImage(replied?.image || image);
+  const { filePath } = await compositeSoyjak("point", filename);
+
+  // Reply to replied.id with the generated image
   if (replied.image) {
-    await downloadImage(replied.image);
-    await compositeSoyjak("point", "temp.png");
-    // Reply to replied.id with the generated image
     await message.channel.messages.fetch(replied.id).then((msg) => {
       msg.reply({
-        files: ["dist/new.png"],
+        files: [filePath],
       });
     });
     return;
   }
 
-  // If the user is sending an image, soyjakify that instead
+  // Reply to the message with the generated image
   if (image) {
-    await downloadImage(image);
-    await compositeSoyjak("point", "temp.png");
-    // Reply to the message with the generated image
     await message.reply({
-      files: ["dist/new.png"],
+      files: [filePath],
     });
     return;
   }

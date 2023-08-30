@@ -16,11 +16,16 @@ const downloadImage = async (url) => {
     console.log("Failed to download image from URL:", url);
     throw new Error(`unexpected response ${response.statusText}`);
   }
+
+  const contentType = response.headers.get("content-type");
+  const extension = contentType.split("/")[1];
+  const filename = `temp.${extension}`;
+
   await streamPipeline(
     response.body,
-    fs.createWriteStream(path.resolve("images", "temp.png"))
+    fs.createWriteStream(path.resolve("images", filename))
   );
-  return;
+  return { filename };
 };
 
 module.exports = {
