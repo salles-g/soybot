@@ -7,23 +7,23 @@ const image = (name) => sharp(path(name));
 /**
  * Receives a background image and composites a soyjack pointing to it
  */
-async function compositeSoyjak(bg) {
-  const background = image(bg);
+async function compositeSoyjak(soyjak, source) {
+  const background = image(source);
   const { width, height } = await background.metadata();
 
-  const soyjak = image("soyjak-pointing.png").resize(width, height, {
+  const soyjakInst = image(soyjak).resize(width, height, {
     fit: "contain",
   });
 
-  await soyjak.toBuffer().then((input) => {
+  await soyjakInst.toBuffer().then((input) => {
     return background.composite([{ input }]).toFile(temp);
   });
 
   // Now we read the generated "temp" file and trim its borders
-  await sharp(temp).trim().toFile(`dist/${bg}`);
+  await sharp(temp).trim().toFile(`dist/${source}`);
 
   // And finally, we delete the temp file
   require("fs").unlinkSync(temp);
 }
 
-compositeSoyjak("switch.jpg");
+compositeSoyjak("soyjak-pointing.png", "switch.jpg");
