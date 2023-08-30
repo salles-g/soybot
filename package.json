@@ -4,7 +4,7 @@
   "description": "A Soyjak bot for Discord",
   "main": "index.js",
   "scripts": {
-    "precommit": "npm version patch",
+    "postcommit": "npm version patch",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
@@ -20,7 +20,7 @@
   },
   "husky": {
     "hooks": {
-      "post-commit": "echo \"[Husky] pre-commit\" && npm run precommit"
+      "post-commit": "echo \"[Husky] pre-commit\" && npm run postcommit"
     }
   },
   "devDependencies": {
