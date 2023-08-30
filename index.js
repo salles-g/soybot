@@ -5,7 +5,7 @@ const path = (name) => `./images/${name}`;
 const image = (name) => sharp(path(name));
 
 /**
- * Receives a background image and composites a soyjack pointing to it
+ * Receives a background image and composites a soyjak pointing to it
  */
 async function compositeSoyjak(soyjak, source) {
   const background = image(source);
