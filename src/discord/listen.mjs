@@ -39,7 +39,7 @@ export function listen() {
   // Listen to all messages
   client.on(Events.MessageCreate, async (message) => {
     const { content, image, replied } = messageInfo(message);
-    if (content !== "!point") {
+    if (content.toLowerCase() !== "!point") {
       return;
     }
 
