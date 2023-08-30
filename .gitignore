@@ -3,3 +3,6 @@ node_modules
 # Ignore all images, except for soyjak-pointing.png
 images/*
 !images/soyjak-pointing.png
+!images/its-over.jpg
+!images/dancejak.gif
+!images/soyline-miami.jpeg
