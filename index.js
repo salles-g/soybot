@@ -1,7 +1,6 @@
 const sharp = require("sharp");
 
 const temp = "dist/temp.png";
-const output = "dist/output.png";
 const path = (name) => `./images/${name}`;
 const image = (name) => sharp(path(name));
 
