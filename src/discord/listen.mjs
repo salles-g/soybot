@@ -1,7 +1,5 @@
 import { Client, GatewayIntentBits, Events } from "discord.js";
-import { messageInfo } from "./utils/message.mjs";
-import { downloadImage } from "./utils/image.js";
-import { compositeSoyjak } from "../sharp.mjs";
+import { commands } from "./commands/index.mjs";
 
 export function listen() {
   console.log("Listening for slash commands...");
@@ -38,36 +36,17 @@ export function listen() {
 
   // Listen to all messages
   client.on(Events.MessageCreate, async (message) => {
-    const { content, image, replied } = messageInfo(message);
-    if (content.toLowerCase() !== "!point") {
-      return;
-    }
+    const command = message.content.match(/!(\w+)/)?.[1];
 
-    // Delete the message if it doesn't have an image
-    if (!image) {
-      message.delete();
-    }
+    // Find a command, in the commands object, that,
+    // when converted to lowercase, matches the command name
+    const commandFn = Object.entries(commands).find(
+      ([name]) => name.toLowerCase() === command?.toLowerCase()
+    )?.[1];
 
-    if (replied.image) {
-      await downloadImage(replied.image);
-      await compositeSoyjak("point", "temp.png");
-      // Reply to replied.id with the generated image
-      await message.channel.messages.fetch(replied.id).then((msg) => {
-        msg.reply({
-          files: ["dist/new.png"],
-        });
-      });
-      return;
-    }
-
-    if (image) {
-      await downloadImage(image);
-      await compositeSoyjak("point", "temp.png");
-      // Reply to the message with the generated image
-      await message.reply({
-        files: ["dist/new.png"],
-      });
-      return;
+    // If there is a command, run it
+    if (commandFn) {
+      await commandFn(message);
     }
   });
 
