@@ -5,15 +5,23 @@ const { promisify } = require("util");
 const streamPipeline = promisify(pipeline);
 
 /**
- * Download an image from given URL and save it to the dist/ folder
+ * @param {string} url
+ * @returns {boolean}
+ */
+const isImage = (url) => {
+  return url.match(/\.(jpeg|jpg|gif|png|jfif|webp)$/) != null;
+};
+
+/**
+ * Download a media from given URL and save it to the dist/ folder
  * @param {string} url
  */
-const downloadImage = async (url) => {
-  console.log("Downloading image from URL:", url);
+const downloadMedia = async (url) => {
+  console.log("Downloading media from URL:", url);
 
   const response = await fetch(url);
   if (!response.ok) {
-    console.log("Failed to download image from URL:", url);
+    console.log("Failed to download media from URL:", url);
     throw new Error(`unexpected response ${response.statusText}`);
   }
 
@@ -29,5 +37,6 @@ const downloadImage = async (url) => {
 };
 
 module.exports = {
-  downloadImage,
+  isImage,
+  downloadMedia,
 };

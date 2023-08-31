@@ -1,6 +1,7 @@
 import { Message } from "discord.js";
-import { downloadImage } from "./image.js";
-import { compositeSoyjak } from "../../sharp.mjs";
+import { downloadMedia, isImage } from "./image.js";
+import { compositeSoyjak } from "../../composite.mjs";
+import { isVideo } from "./video.js";
 
 /**
  * @param {Message<boolean>} message
@@ -52,10 +53,15 @@ export const replyWithText = async (message, text) => {
 
 export const replyWithComposite = async (message, composite) => {
   const { image, replied } = messageInfo(message);
+  const src = replied?.image || image;
 
   // If there are no images at all, do nothing
-  if (!image && !replied?.image) {
-    return;
+  if (!src) {
+    return message.reply("You need to provide an image.");
+  }
+
+  if (!isImage(src) && !isVideo(src)) {
+    return message.reply("That's not a valid media.");
   }
 
   // Delete the message if it doesn't have an image
@@ -64,7 +70,7 @@ export const replyWithComposite = async (message, composite) => {
   }
 
   // Download and composite the given soyjak
-  const { filename } = await downloadImage(replied?.image || image);
+  const { filename } = await downloadMedia(src);
   const { filePath } = await compositeSoyjak(composite, filename);
 
   // Reply to replied.id with the generated image
