@@ -1,4 +1,6 @@
 import { Message } from "discord.js";
+import { downloadImage } from "./image.js";
+import { compositeSoyjak } from "../../sharp.mjs";
 
 /**
  * @param {Message<boolean>} message
@@ -46,4 +48,40 @@ export const replyWithImage = async (message, image) => {
 
 export const replyWithText = async (message, text) => {
   return await reply(message, text);
+};
+
+export const replyWithComposite = async (message, composite) => {
+  const { image, replied } = messageInfo(message);
+
+  // If there are no images at all, do nothing
+  if (!image && !replied?.image) {
+    return;
+  }
+
+  // Delete the message if it doesn't have an image
+  if (!image) {
+    message.delete();
+  }
+
+  // Download and composite the given soyjak
+  const { filename } = await downloadImage(replied?.image || image);
+  const { filePath } = await compositeSoyjak(composite, filename);
+
+  // Reply to replied.id with the generated image
+  if (replied.image) {
+    await message.channel.messages.fetch(replied.id).then((msg) => {
+      msg.reply({
+        files: [filePath],
+      });
+    });
+    return;
+  }
+
+  // Reply to the message with the generated image
+  if (image) {
+    await message.reply({
+      files: [filePath],
+    });
+    return;
+  }
 };
