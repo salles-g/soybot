@@ -23,7 +23,7 @@ export function listen() {
 
   // Listen to all messages
   client.on(Events.MessageCreate, async (message) => {
-    const command = message.content.match(/!(\w+)/)?.[1];
+    const command = message.content.match(/^!(\w+)/)?.[1];
 
     // Find a command, in the commands object, that,
     // when converted to lowercase, matches the command name
