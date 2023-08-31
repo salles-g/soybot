@@ -2,10 +2,12 @@ import { itsOver } from "./itsover.mjs";
 import { dancejak } from "./dancejak.mjs";
 import { point } from "./point.mjs";
 import { soylineMiami } from "./soylineMiami.mjs";
+import { itsOverLay } from "./itsoverlay.mjs";
 
 export const commands = {
   point,
   itsOver,
   dancejak,
-  soylineMiami: soylineMiami,
+  soylineMiami,
+  itsOverLay,
 };

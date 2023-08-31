@@ -10,6 +10,7 @@ const path = (name) => `./images/${name}`;
 const image = (name) => sharp(path(name));
 const soyMap = {
   point: "soyjak-pointing.png",
+  "its-over": "itsovertransparent.png",
 };
 
 /**
