@@ -1,9 +1,10 @@
+.env
 dist
 node_modules
-# Ignore all images, except for soyjak-pointing.png
-images/*
-!images/soyjak-pointing.png
-!images/its-over.jpg
-!images/dancejak.gif
-!images/soyline-miami.jpeg
-!images/itsovertransparent.png
+# Ignore all temp images
+public/assets/*
+!public/assets/soyjak-pointing.png
+!public/assets/its-over.jpg
+!public/assets/dancejak.gif
+!public/assets/soyline-miami.jpeg
+!public/assets/itsovertransparent.png
