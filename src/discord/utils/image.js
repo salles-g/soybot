@@ -31,7 +31,7 @@ const downloadMedia = async (url) => {
 
   await streamPipeline(
     response.body,
-    fs.createWriteStream(path.resolve("images", filename))
+    fs.createWriteStream(path.resolve("public/assets", filename))
   );
   return { filename };
 };

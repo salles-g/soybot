@@ -1,6 +1,6 @@
 import { replyWithImage } from "../utils/message.mjs";
 
 export async function soylineMiami(message) {
-  await replyWithImage(message, "images/soyline-miami.jpeg");
+  await replyWithImage(message, "public/assets/soyline-miami.jpeg");
   return;
 }

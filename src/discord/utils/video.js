@@ -17,7 +17,7 @@ async function getFirstFrame(videoPath) {
   console.log("Extracting thumbnail from", videoPath);
   return new Promise(async (resolve, reject) => {
     try {
-      var process = new ffmpeg(`images/${videoPath}`);
+      var process = new ffmpeg(`public/assets/${videoPath}`);
       const video = await process;
       video
         .fnExtractFrameToJPG("dist", {
@@ -52,7 +52,7 @@ async function addWatermark(watermark, videoPath) {
 
   return new Promise(async (resolve, reject) => {
     try {
-      var process = new ffmpeg(`./images/${videoPath}`);
+      var process = new ffmpeg(`./public/assets/${videoPath}`);
       await process.then(function (video) {
         video
           .fnAddWatermark(watermark, wmPath, {

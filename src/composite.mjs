@@ -9,10 +9,10 @@ import { isImage } from "./discord/utils/image.js";
 
 // Find any file in the "images" folder with temp.* filename
 const findImg = (name) => {
-  const files = fs.readdirSync("./images");
+  const files = fs.readdirSync("public/assets");
   return files.find((file) => file.startsWith(name));
 };
-const path = (name) => `./images/${name}`;
+const path = (name) => `public/assets/${name}`;
 const image = (name) => sharp(path(name));
 const soyMap = {
   point: "soyjak-pointing.png",
